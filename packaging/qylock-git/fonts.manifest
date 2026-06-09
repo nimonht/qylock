@@ -10,7 +10,7 @@
 #   https://…          downloaded with curl
 #   copy:<other_theme> copied from a font another theme already ships
 #
-# To supply a font you legally own, either:
+# To supply a font you have, either:
 #   * qylock-fetch-fonts --install <theme> /path/to/font.ttf
 #   * put a URL in this file's `source` column, or in ~/.config/qylock/fonts.manifest
 #   * export QYLOCK_FONT_URL__<theme>=https://…   (e.g. QYLOCK_FONT_URL__nier_automata=…)

@@ -3,9 +3,8 @@
 # qylock-fetch-fonts — fetch the per-theme fonts that qylock cannot ship.
 #
 # Several themes look their best with a specific font that we are not allowed
-# to redistribute (proprietary / licensing restrictions). Upstream's README
-# documents these and asks the user to drop the file into the theme's font/
-# directory; this script automates that step.
+# to redistribute (proprietary / licensing restrictions).
+# This script automates that step.
 #
 # It can:
 #   * report which themes are missing their font           (--list)

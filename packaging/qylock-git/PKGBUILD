@@ -1,14 +1,9 @@
-# Maintainer: Your Name <you@example.com>
+# Maintainer: nimonht <mle64667@gmail.com>
 #
 # AUR package for qylock (https://github.com/Darkkal44/qylock) by Darkkal44.
 # This package only PACKAGES the project: the theme data is pulled straight
 # from Darkkal's upstream repo, so all project credit and changes stay there.
-# The packaging glue shipped here is just the PKGBUILD plus three small
-# helpers (qylock-lock / qylock-sddm / qylock-fetch-fonts), an install hook,
-# and the font manifest.
-#
-# It's a VCS (-git) package because upstream has no tagged releases yet: it
-# builds the latest commit, and `paru -Syu` rebuilds it when upstream moves.
+
 
 pkgname=qylock-git
 pkgver=r0.0000000
