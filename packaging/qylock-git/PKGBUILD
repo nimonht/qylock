@@ -1,23 +1,22 @@
 # Maintainer: Your Name <you@example.com>
 #
-# qylock — a collection of SDDM + Quickshell lockscreen themes.
+# AUR package for qylock (https://github.com/Darkkal44/qylock) by Darkkal44.
+# This package only PACKAGES the project: the theme data is pulled straight
+# from Darkkal's upstream repo, so all project credit and changes stay there.
+# The packaging glue shipped here is just the PKGBUILD plus three small
+# helpers (qylock-lock / qylock-sddm / qylock-fetch-fonts), an install hook,
+# and the font manifest.
 #
-# This is a release-style PKGBUILD. By default it builds the upstream project
-# pinned to a commit so the build is reproducible without an upstream tag.
-# When upstream cuts a tagged release, switch `source` to:
-#     source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-# and run `updpkgsums` to replace the SKIP checksum (required for [extra]).
-#
-# To build from your own fork or a local checkout instead, point `source` at it.
+# It's a VCS (-git) package because upstream has no tagged releases yet: it
+# builds the latest commit, and `paru -Syu` rebuilds it when upstream moves.
 
-pkgname=qylock
-pkgver=1.0.0
+pkgname=qylock-git
+pkgver=r0.0000000
 pkgrel=1
-pkgdesc="SDDM and Quickshell lockscreen theme collection"
+pkgdesc="SDDM and Quickshell lockscreen theme collection (by Darkkal44)"
 arch=('any')
 url="https://github.com/Darkkal44/qylock"
 license=('GPL-3.0-or-later')
-# Themes are Qt6 QML; these are required to render any theme.
 depends=('qt6-declarative' 'qt6-5compat' 'qt6-svg')
 makedepends=('git')
 optdepends=(
@@ -31,13 +30,11 @@ optdepends=(
     'gst-plugins-ugly: video wallpaper codecs'
     'curl: download fonts with qylock-fetch-fonts'
 )
-install="$pkgname.install"
+provides=('qylock')
+conflicts=('qylock')
+install="qylock.install"
 
-# Repo + commit to build from. Point _repo at your fork if the pinned commit
-# is not on the upstream remote yet (e.g. https://github.com/<you>/qylock).
-_repo="$url"
-_commit=db61a972b4b23728d9944a906e70029ca8a5899d
-source=("$pkgname::git+$_repo.git#commit=$_commit"
+source=("qylock::git+$url.git"
         'qylock-lock'
         'qylock-sddm'
         'qylock-fetch-fonts'
@@ -48,8 +45,13 @@ sha256sums=('SKIP'
             'dd22b3df3fc03e1c89b09f82ef8353952efdcf3af8493ba1179224747c1636df'
             'dc376310595a41f94aee55c1f8e31f32c45dab48ea276caef66eea4b806fc72e')
 
+pkgver() {
+    cd "$srcdir/qylock"
+    printf 'r%s.%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
 package() {
-    cd "$srcdir/$pkgname"
+    cd "$srcdir/qylock"
 
     local share="$pkgdir/usr/share/qylock"
     local sddm="$pkgdir/usr/share/sddm/themes"
@@ -58,32 +60,27 @@ package() {
     install -d "$share/themes"
     cp -r themes/. "$share/themes/"
 
-    # 2. Quickshell lockscreen runtime (QML entrypoint, shims, import stubs).
+    # 2. Quickshell lockscreen runtime.
     install -d "$share/quickshell"
     cp -r quickshell-lockscreen/. "$share/quickshell/"
-    # The original lock.sh is superseded by /usr/bin/qylock-lock.
     rm -f "$share/quickshell/lock.sh"
 
-    # 3. Expose every theme to SDDM as `qylock-<name>` via symlinks (no copy,
-    #    so theme data is never duplicated). Each theme is a directory holding
-    #    a metadata.desktop; flatten nested ones (e.g. clockwork/orbital).
+    # 3. One SDDM symlink per theme (flatten nested ones like clockwork/orbital).
     install -d "$sddm"
     local meta themedir name
     while IFS= read -r meta; do
-        themedir="$(dirname "$meta")"            # e.g. themes/clockwork/orbital
-        name="$(basename "$themedir")"           # e.g. orbital
+        themedir="$(dirname "$meta")"
+        name="$(basename "$themedir")"
         ln -s "/usr/share/qylock/${themedir}" "$sddm/qylock-$name"
     done < <(find themes -name metadata.desktop | sort)
 
-    # 4. Executables.
+    # 4. Executables + manifest (shipped with this package).
     install -Dm755 "$srcdir/qylock-lock"        "$pkgdir/usr/bin/qylock-lock"
     install -Dm755 "$srcdir/qylock-sddm"        "$pkgdir/usr/bin/qylock-sddm"
     install -Dm755 "$srcdir/qylock-fetch-fonts" "$pkgdir/usr/bin/qylock-fetch-fonts"
+    install -Dm644 "$srcdir/fonts.manifest"     "$share/fonts.manifest"
 
-    # 5. Font manifest used by qylock-fetch-fonts.
-    install -Dm644 "$srcdir/fonts.manifest" "$share/fonts.manifest"
-
-    # 6. Docs + license.
-    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
-    install -Dm644 LICENSE   "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    # 5. Docs + license.
+    install -Dm644 README.md "$pkgdir/usr/share/doc/qylock/README.md"
+    install -Dm644 LICENSE   "$pkgdir/usr/share/licenses/qylock/LICENSE"
 }
