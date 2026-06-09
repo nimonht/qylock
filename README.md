@@ -8,7 +8,7 @@
 
 <div align="center">
 <pre>
-<a href="#sddm-setup">ꜱᴅᴅᴍ</a>  •  <a href="#quickshell-setup">ǫᴜɪᴄᴋsʜᴇʟʟ</a>  •  <a href="#nixos-setup">ɴɪxᴏs</a>  •  <a href="#arch-setup">ᴀʀᴄʜ</a>  •  <a href="#faq">ꜰᴀǫ</a>  •  <a href="#gallery">ɢᴀʟʟᴇʀʏ</a>  •  <a href="#acknowledgements">ᴀᴄᴋɴᴏᴡʟᴇᴅɢᴇᴍᴇɴᴛꜱ</a>  •  <a href="#credits">ᴄʀᴇᴅɪᴛꜱ</a>
+<a href="#sddm-setup">ꜱᴅᴅᴍ</a>  •  <a href="#quickshell-setup">ǫᴜɪᴄᴋsʜᴇʟʟ</a>  •  <a href="#nixos-setup">ɴɪxᴏs</a>  •  <a href="#faq">ꜰᴀǫ</a>  •  <a href="#gallery">ɢᴀʟʟᴇʀʏ</a>  •  <a href="#acknowledgements">ᴀᴄᴋɴᴏᴡʟᴇᴅɢᴇᴍᴇɴᴛꜱ</a>  •  <a href="#credits">ᴄʀᴇᴅɪᴛꜱ</a>
 </pre>
 </div>
 
@@ -186,54 +186,6 @@ For the Quickshell lockscreen, bind your WM keybind to `qylock-lock` (instead of
 
 > [!NOTE]
 > The flake pins `nixos-unstable` because `quickshell` isn't in stable nixpkgs yet. If your system tracks a stable channel, override the flake's `nixpkgs` input to your unstable channel.
-
-<br>
-
-<p align="center">━━━━━━━ ◈ ━━━━━━━</p>
-
-<a id="arch-setup"></a>
-<br>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/-ARCH%20LINUX%20%28PARU%29-1793d1?style=for-the-badge&labelColor=1a1b26&logo=archlinux&logoColor=white" height="60" />
-</p>
-
-<br>
-
-Ready-to-use Arch packages live in [`packaging/aur/`](packaging/aur/) — no
-need to run `sddm.sh` / `quickshell.sh`. They install the theme data once,
-expose every theme to SDDM via symlinks, and ship three helpers. Two flavours:
-
-| Package | Use it if |
-|--:|:---|
-| [`qylock`](packaging/aur/qylock) | you want a pinned, reproducible release |
-| [`qylock-git`](packaging/aur/qylock-git) | you want `paru -Syu` to auto-rebuild on the latest upstream commit |
-
-#### 🚀 INSTALL
-
-```sh
-cd packaging/aur/qylock && makepkg -si   # local build (or qylock-git)
-# or, once published to the AUR:  paru -S qylock     (or paru -S qylock-git)
-```
-
-#### 🛠️ USAGE
-
-```sh
-qylock-sddm set nier-automata      # pick the login (SDDM) theme
-qylock-lock clockwork/tape         # run the lockscreen (bind in your WM)
-qylock-fetch-fonts --list          # see / install the missing fonts
-```
-
-#### 🧹 CLEAN UNINSTALL
-
-```sh
-paru -Rns qylock                   # removes everything, incl. fetched fonts
-```
-
-The package writes its SDDM choice to a dedicated `/etc/sddm.conf.d/zz-qylock.conf`
-drop-in and its uninstall hook clears any fetched fonts, so removal leaves a
-bloat-free system. See [`packaging/aur/README.md`](packaging/aur/README.md)
-for full details.
 
 <br>
 
