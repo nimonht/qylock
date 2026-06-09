@@ -252,7 +252,7 @@ EOF
 case "${1:-}" in
     -h|--help)    usage ;;
     --list|-l)    do_list ;;
-    --install|-i) shift; [ $# -eq 2 ] || { usage; exit 1; }; do_install "$1" "$2" ;;
+    --install|-i) shift; [ $# -ge 2 ] || { usage; exit 1; }; _theme="$1"; shift; do_install "$_theme" "$*" ;;
     --url|-u)     shift; [ $# -eq 2 ] || { usage; exit 1; }
                   key="$(env_key "$1")"; export "$key=$2"; do_fetch "$1" ;;
     "")           do_fetch ;;
