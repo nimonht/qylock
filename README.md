@@ -200,15 +200,20 @@ For the Quickshell lockscreen, bind your WM keybind to `qylock-lock` (instead of
 
 <br>
 
-A ready-to-use Arch package lives in [`packaging/arch/`](packaging/arch/) — no
-need to run `sddm.sh` / `quickshell.sh`. It installs the theme data once,
-exposes every theme to SDDM via symlinks, and ships three helpers.
+Ready-to-use Arch packages live in [`packaging/aur/`](packaging/aur/) — no
+need to run `sddm.sh` / `quickshell.sh`. They install the theme data once,
+expose every theme to SDDM via symlinks, and ship three helpers. Two flavours:
+
+| Package | Use it if |
+|--:|:---|
+| [`qylock`](packaging/aur/qylock) | you want a pinned, reproducible release |
+| [`qylock-git`](packaging/aur/qylock-git) | you want `paru -Syu` to auto-rebuild on the latest upstream commit |
 
 #### 🚀 INSTALL
 
 ```sh
-cd packaging/arch && makepkg -si   # local build
-# or, once published to the AUR:  paru -S qylock
+cd packaging/aur/qylock && makepkg -si   # local build (or qylock-git)
+# or, once published to the AUR:  paru -S qylock     (or paru -S qylock-git)
 ```
 
 #### 🛠️ USAGE
@@ -227,7 +232,7 @@ paru -Rns qylock                   # removes everything, incl. fetched fonts
 
 The package writes its SDDM choice to a dedicated `/etc/sddm.conf.d/zz-qylock.conf`
 drop-in and its uninstall hook clears any fetched fonts, so removal leaves a
-bloat-free system. See [`packaging/arch/README.md`](packaging/arch/README.md)
+bloat-free system. See [`packaging/aur/README.md`](packaging/aur/README.md)
 for full details.
 
 <br>
