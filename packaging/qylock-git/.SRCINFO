@@ -29,7 +29,7 @@ pkgbase = qylock-git
 	sha256sums = SKIP
 	sha256sums = e2a4a1b9b5a99b22689fe057fe2d11cb4ed6c74cca9557fb809e051c8083e24e
 	sha256sums = 23ea404bda83a9a27dfc9c416a9995cd86aeb7db867fbdb0232b32c8266818b7
-	sha256sums = dd22b3df3fc03e1c89b09f82ef8353952efdcf3af8493ba1179224747c1636df
-	sha256sums = dc376310595a41f94aee55c1f8e31f32c45dab48ea276caef66eea4b806fc72e
+	sha256sums = fdbdbefe7e2bc88ae1e6a15be5f5adcfd460d1aac06369e7b9da74be4b133f01
+	sha256sums = 44a821595637447bf1b3d5b8a920efa1d13c7bc781863f243b3e5c651761acc4
 
 pkgname = qylock-git
