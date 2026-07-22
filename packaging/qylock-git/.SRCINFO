@@ -1,6 +1,6 @@
 pkgbase = qylock-git
-	pkgdesc = SDDM and Quickshell lockscreen theme collection (latest git)
-	pkgver = r0.0000000
+	pkgdesc = SDDM and Quickshell lockscreen theme collection (by Darkkal44)
+	pkgver = r176.5b04fec
 	pkgrel = 1
 	url = https://github.com/Darkkal44/qylock
 	install = qylock.install

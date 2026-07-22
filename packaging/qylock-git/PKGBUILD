@@ -6,7 +6,7 @@
 
 
 pkgname=qylock-git
-pkgver=r0.0000000
+pkgver=r176.5b04fec
 pkgrel=1
 pkgdesc="SDDM and Quickshell lockscreen theme collection (by Darkkal44)"
 arch=('any')
